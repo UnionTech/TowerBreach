@@ -1,0 +1,22 @@
+---
+- name: Configure ESXI VM guest network interface
+  hosts: all
+  connection: local
+
+  tasks:
+    - name: Start Configure an ESXi VM Guest network interface
+      vsphere_guest:
+        vcenter_hostname: 10.10.10.11
+        validate_certs: no
+        vmware_guest_facts: true
+        username: 'Administrator@vsphere.local'
+        password: 'JpMsD41mDpF!'
+        guest: 'ans-TWBR-VM09'
+    
+    - name: NMCLI START   
+      nmcli:
+        conn_name: my-eth1
+        ifname: ens160
+        type: ethernet
+        ip4: 10.10.10.103/24
+        state: present

@@ -1,0 +1,2 @@
+[web-vms]
+ans-TWBR-VM14 ansible_host=10.10.10.181

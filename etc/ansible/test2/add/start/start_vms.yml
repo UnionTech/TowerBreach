@@ -1,0 +1,15 @@
+---
+- name: Start an ESXI VM guest
+  hosts: all
+  connection: local
+
+  tasks:
+    - name: Start an ESXi VM Guest
+      vsphere_guest:
+        vcenter_hostname: 10.10.10.11
+        validate_certs: no
+        username: 'Administrator@vsphere.local'
+        password: 'JpMsD41mDpF!'
+        guest: 'ans-TWBR-VM09'
+        state: powered_on
+        force: yes

@@ -1,0 +1,55 @@
+---
+
+- hosts: all
+  connection: local
+  user: remote
+  gather_facts: false
+  ## utilisateur en sudoer
+  become_user: true
+
+  vars:
+    datacenter: 'ITINET'
+    esxi_host: 'serv1.itinet.local'
+    notes: 'Created by Ansible'
+
+  tasks:
+    - vsphere_guest:
+        vcenter_hostname: '10.10.10.11'
+        username: 'Administrator@vsphere.local'
+        password: 'JpMsD41mDpF!'
+        validate_certs: false
+        guest: 'ans-TWBR-VM14'
+#        state: powered_on
+        from_template: yes
+        template_src: "IV-STLV-UBU1604"
+        cluster: "CLUSTER"
+        resource_pool: "INTECH"
+        vm_extra_config:
+          notes: "{{ notes }}"
+          ip_address: 10.10.10.181
+          power_on_after_clone: yes
+        vm_disk:
+          disk1:
+            size_gb: '10'
+            type: thin
+            datastore: 'INTECH_TP_Datastore'
+        vm_nic:
+          nic1:
+            type: vmxnet3
+            network: 10.10.10.103
+            network_type: standard
+        vm_hardware:
+          memory_mb: "4096"
+          num_cpus: "2"
+          osid: "IV-STLV-UBU1604"
+          scsi: paravirtual
+        esxi:
+          datacenter: "{{ datacenter }}"
+          hostname: "{{ esxi_host }}"
+##   network: 
+##     - name: "enp0s3"  
+##     gateway: "10.10.10.254"
+##     ip: "10.10.10.100"
+##     mac: "aa:bb:dd:aa:00:14"
+##     netmask: "255.255.255.0"
+...
